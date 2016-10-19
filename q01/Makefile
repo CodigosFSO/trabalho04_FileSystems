@@ -21,20 +21,20 @@ all:
 	$(MAKE) $(TARGET)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
-  @echo construindo o objeto $@
-  @$(CC) -c $(CFLAGS) -I$(INC_DIR) $< -o $@
+	@echo construindo o objeto $@
+	@$(CC) -c $(CFLAGS) -I$(INC_DIR) $< -o $@
 
 $(TARGET): $(OBJ)
-  @echo criando executável
-  $(CC) $(OBJ) $(CFLAGS) -o $@
-  @echo terminado
+	@echo criando executável
+	$(CC) $(OBJ) $(CFLAGS) -o $@
+	@echo terminado
 
 clean:
-  @echo Limpando....
-  @find . -name *.o -exec rm {} \;
-  @rm -rf *~ *.o prog out.txt
+	@echo Limpando....
+	@find . -name *.o -exec rm {} \;
+	@rm -rf *~ *.o prog out.txt
 
 dist-clean: clean
-  @echo Limpando com dist-clean...
-  @rm -f $(TARGET)/$(NAME)
-  @rm -rf $(BIN_DIR)
+	@echo Limpando com dist-clean...
+	@rm -f $(TARGET)/$(NAME)
+	@rm -rf $(BIN_DIR)
