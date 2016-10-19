@@ -4,18 +4,14 @@
 #include <time.h>
 
 #include "argument_handler.h"
-
+#include "backup.h"
 
 int main(int argc, char* argv[])
 {
-	struct stat target_stat;
 	struct utimbuf new_meta;
 	time_t time_to_set;
 
-	if(stat(argv[1], &target_stat) < 0) {
-		perror(argv[1]);
-		return 1;
-	}
+	create_backup(argv[1]);
 
 	time_to_set = convert_argument_to_time(argv[2]);
 
@@ -25,7 +21,7 @@ int main(int argc, char* argv[])
 	if(utime(argv[1], &new_meta) < 0) {
 		perror(argv[1]);
 		return 1;
-	}	
-	
+	}
+
 	return 0;
 }

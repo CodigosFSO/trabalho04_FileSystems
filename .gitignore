@@ -1,3 +1,4 @@
-q01/file.txt
+q01/*.txt
+q01/*.bkp
 
 *.pdf
