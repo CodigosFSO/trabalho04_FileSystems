@@ -23,7 +23,7 @@ time_t convert_argument_to_time(char* argument)
 	time.tm_year = atoi(year) - 1900;
 	time.tm_mon = atoi(month) - 1;
 	time.tm_mday = atoi(day);
-	time.tm_hour = atoi(hours);
+	time.tm_hour = atoi(hours) - 1;
 	time.tm_min = atoi(minutes);
 
 	time_converted = mktime(&time);
