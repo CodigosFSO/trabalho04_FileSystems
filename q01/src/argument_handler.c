@@ -31,7 +31,7 @@ time_t convert_argument_to_time(char* argument)
 		time.tm_min = atoi(minutes);
 		time.tm_sec = 0;
 
-		debug(time);
+		//debug(time);
 
 		time_converted = mktime(&time);
 
