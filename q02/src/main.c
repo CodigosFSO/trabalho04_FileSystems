@@ -8,14 +8,14 @@
 int main(int argc, char* argv[]) 
 {
 	if(argc >= 4) {
-		char* path = malloc(strlen(argv[1]) + 2);
-		path[0] = '.';
+		printf("Resultado de buscador -- ''%s'' na pasta %s\n", argv[2], argv[1]);
 
-		strcat(path, argv[1]);
-	
-		search_match_file(path, argv[2], atoi(argv[3]));
-
-		free(path);
+		if(strcmp(argv[1], "/") != 0) {
+			search_match_file(argv[1], argv[2], atoi(argv[3]), ".");
+		}
+		else {
+			search_match_file("", argv[2], atoi(argv[3]), ".");
+		}
 	}
 	else {
 		printf("numero de argumentos insuficiente\n");

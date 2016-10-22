@@ -1,4 +1,4 @@
-NAME = trabalho04_Q02_130010219
+NAME = buscador
 
 SRC_DIR = src
 INC_DIR = include
