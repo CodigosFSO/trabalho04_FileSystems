@@ -5,36 +5,33 @@
 
 #include "directory_handler.h"
 
-void search_match_file(char* path, char* match_string, int max_results, char* father_directory)
+void search_match_file(char* path, char* match_string, int* max_results, char* father_directory,
+	int* current_result)
 {
 	DIR *path_directory;
 	struct dirent *directory_file;
-	char* total_path = malloc(strlen(path) + strlen(father_directory) + 2);
-
-	strcpy(total_path, father_directory);
-	strcat(total_path, "/");
-	strcat(total_path, path);
+	char* total_path = build_total_path(father_directory, path);
 
 	path_directory = opendir(total_path);
 
 	if(path_directory != NULL) {
 		while((directory_file = readdir(path_directory)) != NULL) {
+			if(*max_results <= *current_result) {
+				return;
+			}
 			if(sub_directory_or_file(directory_file->d_name)) {
 				printf("\n");
 				char* total_file_name;
 
-				total_file_name = malloc(strlen(total_path) + strlen(directory_file->d_name) + 2);
+				total_file_name = build_total_path(total_path, directory_file->d_name);
 
-				strcpy(total_file_name, total_path);
-				strcat(total_file_name, "/");
-				strcat(total_file_name, directory_file->d_name);
-
-				printf("Diretório atual: %s\n", total_path);
 				if(directory_match(total_file_name)) {
-					printf("Nome do diretório: %s\n", directory_file->d_name);
-					search_match_file(directory_file->d_name, match_string, max_results, total_path);
+					search_match_file(directory_file->d_name, match_string, max_results, total_path,
+						current_result);
 				}
 				else if(sub_directory_or_file(directory_file->d_name)){
+					(*current_result)++;
+					printf("%d", *current_result);
 					print_file(total_file_name);
 				}
 				free(total_file_name);
@@ -45,21 +42,17 @@ void search_match_file(char* path, char* match_string, int max_results, char* fa
 	else{
 		perror("");
 	}
-	printf("Dando free %s\n\n", total_path);
 	free(total_path);
 }
 
 int directory_match(char* directory_file_name) 
 {
-	printf("lendo: %s\n", directory_file_name);
 	DIR* path_directory  = opendir(directory_file_name);
 
 	if(path_directory != NULL) {
-		printf("É um diretorio\n");
 		return MATCH;
 	}
 	else {
-		printf("É um arquivo\n");
 		closedir(path_directory);
 		return NOT_MATCH;
 	}
@@ -98,4 +91,14 @@ void print_file(char* file_path)
 		}
 		printf("\n");
 	}
+}
+
+char* build_total_path(char* infix, char* path)
+{
+	char* final_path = malloc(strlen(infix) + strlen(path) + 2);
+	strcpy(final_path, infix);
+	strcat(final_path, "/");
+	strcat(final_path, path);
+
+	return final_path;
 }
