@@ -10,5 +10,6 @@ int directory_match(char* directory_file);
 int sub_directory_or_file(char* directory_file_name);
 void print_file(char* file_path);
 char* build_total_path(char* infix, char* path);
+int compare_match_string(char* match_string, char* file_name);
 
 #endif

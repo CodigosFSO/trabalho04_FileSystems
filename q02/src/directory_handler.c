@@ -20,9 +20,7 @@ void search_match_file(char* path, char* match_string, int* max_results, char* f
 				return;
 			}
 			if(sub_directory_or_file(directory_file->d_name)) {
-				printf("\n");
 				char* total_file_name;
-
 				total_file_name = build_total_path(total_path, directory_file->d_name);
 
 				if(directory_match(total_file_name)) {
@@ -30,9 +28,11 @@ void search_match_file(char* path, char* match_string, int* max_results, char* f
 						current_result);
 				}
 				else if(sub_directory_or_file(directory_file->d_name)){
-					(*current_result)++;
-					printf("%d", *current_result);
-					print_file(total_file_name);
+					if(compare_match_string(match_string, directory_file->d_name)) {
+						(*current_result)++;
+						printf("%d", *current_result);
+						print_file(total_file_name);
+					}
 				}
 				free(total_file_name);
 			}
@@ -101,4 +101,14 @@ char* build_total_path(char* infix, char* path)
 	strcat(final_path, path);
 
 	return final_path;
+}
+
+int compare_match_string(char* match_string, char* file_name)
+{
+	if(strstr(file_name, match_string) != NULL) {
+		return TRUE;
+	}
+	else {
+		return FALSE;
+	}
 }
