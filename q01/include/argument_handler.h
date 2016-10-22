@@ -4,5 +4,7 @@
 #define HOURS_END 10
 #define MINUTES_END 12
 
+#include <sys/stat.h>
+
 time_t convert_argument_to_time(char* argument);
 void debug(struct tm time);

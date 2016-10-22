@@ -3,6 +3,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 #include "backup.h"
 
@@ -16,6 +17,8 @@ void create_backup(char* filename) {
 	if(stat(filename, &target_stat) < 0) {
 		perror(filename);
 	}
+
+	print_file_stats(&target_stat);
 
 	copy_file(filename, backup_name);
 
@@ -84,4 +87,10 @@ void copy_file(char* filename, char* backup_name) {
 
 	fclose(source);
 	fclose(backup);
+}
+
+void print_file_stats(struct stat* target_stat)
+{
+	printf("Last Acess Time: %s", asctime(gmtime(&(target_stat->st_atime))));
+	printf("Last Modified Time: %s", asctime(gmtime(&(target_stat->st_mtime))));
 }
