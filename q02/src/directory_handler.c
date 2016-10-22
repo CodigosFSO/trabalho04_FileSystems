@@ -80,4 +80,22 @@ void print_file(char* file_path)
 	FILE* file;
 
 	file = fopen(file_path, "r");
+
+	if(file == NULL) {
+		printf("Error opening file %s\n", file_path);
+	}
+	else {
+		printf("%s\n", file_path);
+		int counter = 0;
+		char c;
+		while(counter < 30) {
+			c = fgetc(file);
+			if(c == EOF) {
+				break;
+			}
+			printf("%c", c);
+			counter++;
+		}
+		printf("\n");
+	}
 }

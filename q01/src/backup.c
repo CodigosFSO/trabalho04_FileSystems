@@ -65,6 +65,7 @@ void copy_file(char* filename, char* backup_name) {
 
 	if(source == NULL) {
 		printf("Error trying to open file\n");
+		return;
 	}
 
 	backup = fopen(backup_name, "w");
@@ -72,6 +73,7 @@ void copy_file(char* filename, char* backup_name) {
 	if(backup == NULL) {
 		fclose(source);
 		printf("Error creating backup file\n");
+		return;
 	}
 
 	while((c = fgetc(source)) != EOF) {
